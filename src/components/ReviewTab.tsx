@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Question } from '../types';
-import { Eye, EyeOff, ShieldCheck, KeyRound, Lock, Server, ShieldAlert, Search } from 'lucide-react';
+import { Eye, EyeOff, ShieldCheck, KeyRound, Lock, Server, ShieldAlert, Search, CheckCircle, XCircle, BookOpen } from 'lucide-react';
 
 interface ReviewTabProps {
   questions: Question[];
@@ -36,19 +36,28 @@ export default function ReviewTab({ questions }: ReviewTabProps) {
       case 'Cryptography':
         return <KeyRound id="crypt_ic" className="w-3.5 h-3.5 text-indigo-600" />;
       case 'Network Security':
+      case 'Networks & Protocols':
+      case 'OSI Layers':
         return <ShieldAlert id="net_ic" className="w-3.5 h-3.5 text-indigo-600" />;
       case 'Application Security':
+      case 'Software Architecture':
+      case 'OOP Concepts':
         return <Lock id="app_ic" className="w-3.5 h-3.5 text-indigo-600" />;
       case 'System & OS Security':
+      case 'Memory Management':
+      case 'CPU Scheduling':
         return <Server id="sys_ic" className="w-3.5 h-3.5 text-indigo-600" />;
       case 'Access Control & Authentication':
+      case 'Transactions':
+      case 'Normalization':
+      case 'Relational Design':
         return <ShieldCheck id="auth_ic" className="w-3.5 h-3.5 text-indigo-600" />;
       default:
-        return <ShieldCheck id="def_ic" className="w-3.5 h-3.5 text-indigo-600" />;
+        return <BookOpen id="def_ic" className="w-3.5 h-3.5 text-indigo-600" />;
     }
   };
 
-  const categories = ['All', 'Cryptography', 'Network Security', 'Application Security', 'System & OS Security', 'Access Control & Authentication'];
+  const categories = ['All', ...Array.from(new Set(questions.map(q => q.category)))];
 
   const filteredQuestions = questions.filter(q => {
     const matchesSearch = q.text.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -185,14 +194,38 @@ export default function ReviewTab({ questions }: ReviewTabProps) {
                   </div>
 
                   {isRevealed && (
-                    <div id={`reveal_answer_panel_${q.id}`} className="bg-emerald-50/40 border border-emerald-200/50 rounded-xl p-4 space-y-2 text-xs">
-                      <p id={`correct_badge_${q.id}`} className="font-bold text-emerald-900 flex items-center gap-1.5">
-                        <span className="w-2 h-2 bg-emerald-500 rounded-full" />
-                        <span>Correct Option Key: {q.correctAnswer}</span>
+                    <div id={`reveal_answer_panel_${q.id}`} className={`border rounded-xl p-4 space-y-2 text-xs transition-all ${
+                      selectedAnswers[q.id] 
+                        ? selectedAnswers[q.id] === q.correctAnswer
+                          ? 'bg-emerald-50/50 border-emerald-200 text-emerald-950'
+                          : 'bg-rose-50/50 border-rose-200 text-rose-950'
+                        : 'bg-slate-50 border-slate-200 text-slate-800'
+                    }`}>
+                      {selectedAnswers[q.id] && (
+                        <p id={`feedback_banner_${q.id}`} className={`font-bold flex items-center gap-1.5 ${
+                          selectedAnswers[q.id] === q.correctAnswer ? 'text-emerald-800' : 'text-rose-800'
+                        }`}>
+                          {selectedAnswers[q.id] === q.correctAnswer ? (
+                            <>
+                              <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />
+                              <span>🎉 Correct Guess!</span>
+                            </>
+                          ) : (
+                            <>
+                              <XCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                              <span>❌ Incorrect choice (You highlighted Option {selectedAnswers[q.id]})</span>
+                            </>
+                          )}
+                        </p>
+                      )}
+
+                      <p id={`correct_badge_${q.id}`} className="font-bold flex items-center gap-1.5 text-slate-850">
+                        <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full shrink-0" />
+                        <span>Correct Answer Key: <strong className="text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded ml-1 font-mono">{q.correctAnswer}</strong></span>
                       </p>
                       {q.explanation && (
-                        <p id={`explanation_${q.id}`} className="text-slate-600 leading-relaxed pl-3 border-l-2 border-emerald-400">
-                          <strong className="text-slate-800">Rationale: </strong>{q.explanation}
+                        <p id={`explanation_${q.id}`} className="text-slate-600 leading-relaxed pl-3 border-l-2 border-slate-300">
+                          <strong className="text-slate-800">Explanation & Rationale: </strong>{q.explanation}
                         </p>
                       )}
                     </div>

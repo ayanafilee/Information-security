@@ -1,6 +1,6 @@
 {
   "name": "Information Security Exam Hub",
-  "description": "Information Security exam study guide, mock quiz, and offline Microsoft Word exporter.",
+  "description": "Comprehensive academic exam preparatory portal, interactive mock quiz simulator, and offline Microsoft Word study guide exporter.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

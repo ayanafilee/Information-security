@@ -5,7 +5,7 @@ export interface Question {
   options: string[];
   correctAnswer: 'A' | 'B' | 'C' | 'D' | 'E';
   explanation?: string;
-  category: 'Cryptography' | 'Network Security' | 'Application Security' | 'System & OS Security' | 'Access Control & Authentication';
+  category: string;
   source?: string;
   points?: number;
 }

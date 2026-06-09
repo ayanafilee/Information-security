@@ -13,9 +13,16 @@ export default function ExportPanel({ questions }: ExportPanelProps) {
   const [studentName, setStudentName] = useState('');
   const [idNo, setIdNo] = useState('');
   
-  // Topic categories
-  const categories = ['Cryptography', 'Network Security', 'Application Security', 'System & OS Security', 'Access Control & Authentication'];
+  // Dynamic topic categories
+  const categories = Array.from(new Set(questions.map(q => q.category)));
   const [selectedCats, setSelectedCategories] = useState<string[]>(categories);
+  const [prevQuestions, setPrevQuestions] = useState<Question[]>(questions);
+
+  // Sync state if questions change (e.g., course switch)
+  if (questions !== prevQuestions) {
+    setSelectedCategories(categories);
+    setPrevQuestions(questions);
+  }
 
   const handleToggleCategory = (cat: string) => {
     if (selectedCats.includes(cat)) {

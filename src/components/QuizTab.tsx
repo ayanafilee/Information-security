@@ -42,15 +42,24 @@ export default function QuizTab({ questions }: QuizTabProps) {
       case 'Cryptography':
         return <KeyRound className="w-3.5 h-3.5 text-indigo-600" />;
       case 'Network Security':
+      case 'Networks & Protocols':
+      case 'OSI Layers':
         return <ShieldAlert className="w-3.5 h-3.5 text-indigo-600" />;
       case 'Application Security':
+      case 'Software Architecture':
+      case 'OOP Concepts':
         return <Lock className="w-3.5 h-3.5 text-indigo-600" />;
       case 'System & OS Security':
+      case 'Memory Management':
+      case 'CPU Scheduling':
         return <Server className="w-3.5 h-3.5 text-indigo-600" />;
       case 'Access Control & Authentication':
+      case 'Transactions':
+      case 'Normalization':
+      case 'Relational Design':
         return <ShieldCheck className="w-3.5 h-3.5 text-indigo-600" />;
       default:
-        return <ShieldCheck className="w-3.5 h-3.5 text-indigo-600" />;
+        return <Award className="w-3.5 h-3.5 text-indigo-600" />;
     }
   };
 
