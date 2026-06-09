@@ -8,7 +8,7 @@ import {
 } from './questionsData';
 import ReviewTab from './components/ReviewTab';
 import QuizTab from './components/QuizTab';
-import ExportPanel from './components/ExportPanel';
+
 import { 
   ShieldCheck, 
   BookOpen, 
@@ -223,7 +223,6 @@ export default function App() {
 
           {/* SECONDARY SIDEBAR */}
           <div id="workspace_secondary" className="lg:col-span-4 space-y-6">
-            <ExportPanel questions={activeQuestions} />
             
             {/* STUDY CHEATSHEET */}
             <div id="cheatsheet_card" className="bg-white rounded-2xl border border-slate-200/60 p-6 shadow-sm space-y-4">
